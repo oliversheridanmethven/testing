@@ -4,10 +4,10 @@ cmake_minimum_required(VERSION 3.25)  # Use the latest and greatest.
 # compilers, so we set our paths to the compilers first.
 # cf: https://stackoverflow.com/a/29904501/5134817
 
-find_program(CMAKE_C_COMPILER NAMES $ENV{CXX} clang-mp-16 clang-16 clang PATHS ENV PATH NO_DEFAULT_PATH)
-find_program(CMAKE_CXX_COMPILER NAMES $ENV{CXX} clang++-mp-16 clang++-16 clang++ PATHS ENV PATH NO_DEFAULT_PATH)
-#find_program(CMAKE_C_COMPILER NAMES $ENV{CC} gcc-13 PATHS ENV PATH NO_DEFAULT_PATH)
-#find_program(CMAKE_CXX_COMPILER NAMES $ENV{CXX} g++-13 PATHS ENV PATH NO_DEFAULT_PATH)
+#find_program(CMAKE_C_COMPILER NAMES $ENV{CC} clang-18 clang PATHS ENV PATH NO_DEFAULT_PATH)
+#find_program(CMAKE_CXX_COMPILER NAMES $ENV{CXX} clang++-18 clang++ PATHS ENV PATH NO_DEFAULT_PATH)
+find_program(CMAKE_C_COMPILER NAMES $ENV{CC} gcc-14 PATHS ENV PATH NO_DEFAULT_PATH)
+find_program(CMAKE_CXX_COMPILER NAMES $ENV{CXX} g++-14 PATHS ENV PATH NO_DEFAULT_PATH)
 
 project(testing C CXX) # We use a mix of C and C++.
 
@@ -93,15 +93,15 @@ else()
 endif()
 
 include(CheckCCompilerFlag)
-CHECK_C_COMPILER_FLAG("-std=c2x" COMPILER_SUPPORTS_C2X)
+CHECK_C_COMPILER_FLAG("-std=c23" COMPILER_SUPPORTS_C2X)
 if(COMPILER_SUPPORTS_C2X)
-    message(STATUS "Compiler ${CMAKE_C_COMPILER} appears to have C2X support.")
+    message(STATUS "Compiler ${CMAKE_C_COMPILER} appears to have C23 support.")
     foreach(i ${CMAKE_C_COMPILE_FEATURES})
         message(DEBUG "Compiler ${CMAKE_C_COMPILER} uses feature: ${i}")
     endforeach()
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c2x")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c23")
 else()
-    message(FATAL_ERROR "Compiler ${CMAKE_C_COMPILER} has no C2X support.")
+    message(FATAL_ERROR "Compiler ${CMAKE_C_COMPILER} has no C23 support.")
 endif()
 
 # To enable testing and use of ctest.
@@ -177,4 +177,4 @@ endfunction()
 add_subdirectory(src)
 
 # Where we find the scratch files for our proto-typing things.
-add_subdirectory(misc)
+#add_subdirectory(misc)
